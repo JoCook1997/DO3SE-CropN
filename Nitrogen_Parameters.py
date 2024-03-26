@@ -1,7 +1,7 @@
 #Parameters required by the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 26/03/2023
+#last edited 26/03/2024
 
 #---------------------------------------------------------------------------------------------
 import json

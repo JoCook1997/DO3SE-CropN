@@ -1,7 +1,7 @@
 #Main code for the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 01/03/2024
+#last edited 26/03/2024
 
 #import the functions and parameters for the nitrogen module
 import pandas as pd
@@ -10,8 +10,6 @@ import warnings
 from datetime import datetime
 
 from Nitrogen_Functions import *
-
-from Nitrogen_Plots import *
 
 start_time=datetime.now()
 
