@@ -1,0 +1,26 @@
+{
+    "runInfo": {
+        "file_path": "Y:/Academic/PhD/DO3SEStuff/N_Module/Improved_Basic_Module/",
+        "calib_eval": "/Paper2Eval/",
+        "file_ids": ["VA_2018_HU_A","VA_2018_HU_E"]
+    },
+    "concN": {
+        "leafN_targ": 1, 
+        "stemN_targ": 0.017
+    },
+    "uptakeN": {
+        "Nup_premax": 0.55,
+        "Nup_postmax": 0.3
+    },
+    "transfertograinN": {
+        "alpha": 23,
+        "beta": 1.2,
+        "ear_grain_N": 0.95
+    },
+    "O3Remob":{
+        "leaf_O3gradient": 0.2,
+        "leaf_O3intercept": 10.89,
+        "stem_O3gradient": 0.0285,
+        "stem_O3intercept": 0.2293
+    }
+}
