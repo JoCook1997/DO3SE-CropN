@@ -22,10 +22,13 @@ def set_not_growing_params():
     decrease_LAI=0
     growth_LAI=0
     p_nharv=0
+    leafAntioxidantIncrease=0
+    stemAntioxidantIncrease=0
 
     return N_uptake_pre_anth,N_uptake_post_anth, \
             leaving_leaf, leaving_stem, into_leaf, into_stem, \
-                into_grain, decrease_LAI, growth_LAI, p_nharv
+                into_grain, decrease_LAI, growth_LAI, p_nharv, \
+                    leafAntioxidantIncrease, stemAntioxidantIncrease
 
 #-------------------------------------------------------------------------------------------
 
@@ -163,7 +166,8 @@ def distribute_N_uptake_pre_anth(stem_weight,N_uptk,N_stem,leaf_area_growth,leaf
 #-------------------------------------------------------------------------------------------
 
 def distribute_N_post_anth(development_index, N_leaf, N_stem, decrease_LAI, \
-                           stem_weight,post_anth_uptk,leafN_senes,stemN_senes):
+                           stem_weight,post_anth_uptk,leafN_senes,stemN_senes, \
+                            threshold_O3flux, current_O3flux):
     #fraction N to grain
     p_nharv=N_to_grain(development_index)
     
@@ -180,23 +184,33 @@ def distribute_N_post_anth(development_index, N_leaf, N_stem, decrease_LAI, \
 
     #calculate available nitrogen for the grain
     available_stemN=N_stem-(stem_weight*stemN_senes)
+
+    if Antioxidants=="True":
+        #redefine released_leafN since antioxidants mean some of that will stay in leaf
+        #not move to stem. But don't add it back to leaf pool. Keep leaf and stem
+        #antioxidants seperate so that they don't accidentally get mobilised to grain
+        #total leaf N can be calculated before writing to output file
+        leafAntioxidantN, stemAntioxidantN=antioxidant_effect(released_leafN,available_stemN,threshold_O3flux,current_O3flux)
+    else:
+        leafAntioxidantN=0
+        stemAntioxidantN=0
     
     #amount of N that grain should take
-    into_grain=available_stemN*p_nharv
+    into_grain=(available_stemN-stemAntioxidantN)*p_nharv
 
     #N released from senescing LAI and taken up post anthesis is moved to stem as it would have to
     #pass through the stem in order to get to the grain
     #update the N pool for the stem
-    N_stem=N_stem+released_leafN+post_anth_uptk-into_grain
+    N_stem=N_stem+(released_leafN-leafAntioxidantN)-stemAntioxidantN+post_anth_uptk-into_grain
 
     #record the movement of Nitrogen to be used to update the leaf and stem pools in the main code
     #leaf and stem N in this function are local not global variables
     into_leaf=0
     leaving_leaf=released_leafN
-    into_stem=released_leafN+post_anth_uptk
-    leaving_stem=into_grain
+    into_stem=(released_leafN-leafAntioxidantN)+post_anth_uptk
+    leaving_stem=into_grain+stemAntioxidantN
     
-    return into_grain, into_leaf, into_stem, leaving_leaf, leaving_stem,p_nharv
+    return into_grain, into_leaf, into_stem, leaving_leaf, leaving_stem,p_nharv, leafAntioxidantN, stemAntioxidantN
 
 #-------------------------------------------------------------------------------------------
 
@@ -243,6 +257,37 @@ def stemNconc_O3(avgO3):
     pcnt_to_frac=1/100
     O3_senes_stemN_minconc=pcnt_to_frac*((stem_O3gradient*avgO3)+stem_O3intercept)
     return O3_senes_stemN_minconc
+#-------------------------------------------------------------------------------------------
+#calculate antioxidants either directly, or via a modified N:protein conversion factor
+#takes inputs of N that has left the leaf and stem that day
+def antioxidant_effect(releasedLeafN,releasedStemN,cL3,fst_acc):
+
+    #unit convert. fst_acc is in nmol but cL3 is in micro
+    fst_acc=fst_acc/1000
+
+    #initialise variables
+    antioxidantleafN=0
+    antioxidantstemN=0
+    if Antioxidants=="False":
+        pass
+    elif Antioxidants=="True": #if user has chosen to deal with antioxidant effect then proceed
+            if fst_acc>cL3: #if fst has exceeded damage threshold
+                O3stressfactorLeaf=((fst_acc-cL3)/((gradient_modifier_leaf*endPoint)-cL3))
+                O3stressfactorStem=((fst_acc-cL3)/((gradient_modifier_stem*endPoint)-cL3))
+                if O3stressfactorLeaf>1: 
+                    O3stressfactorLeaf=1
+                if O3stressfactorStem>1: 
+                    O3stressfactorStem=1
+                if O3stressfactorLeaf<0: 
+                    O3stressfactorLeaf=0
+                if O3stressfactorStem<0: 
+                    O3stressfactorStem=0
+                antioxidantleafN=O3stressfactorLeaf*releasedLeafN
+                antioxidantstemN=O3stressfactorStem*releasedStemN
+    else:
+        print("Invalid choice for dealing with antioxidant response. Type 'False' in config for no inclusion of this feature and 'True' to include it")
+    
+    return antioxidantleafN, antioxidantstemN
     
 #-------------------------------------------------------------------------------------------
 def avgM12O3(df):

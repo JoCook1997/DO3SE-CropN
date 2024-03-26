@@ -22,5 +22,11 @@
         "leaf_O3intercept": 10.89,
         "stem_O3gradient": 0.0285,
         "stem_O3intercept": 0.2293
+    },
+    "AntioxidantResponse":{
+        "Antioxidants": "True",
+        "gradientModifierLeaf": 0.6,
+        "gradientModifierStem": 10,
+        "endPoint":45000
     }
 }

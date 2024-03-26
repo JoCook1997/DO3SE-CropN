@@ -11,6 +11,8 @@ from datetime import datetime
 
 from Nitrogen_Functions import *
 
+from Nitrogen_Plots import *
+
 start_time=datetime.now()
 
 for file_id in file_ids:
@@ -37,6 +39,9 @@ for file_id in file_ids:
     #this is dependent on average M12 value
     leafN_min=leafNconc_O3(DO3SE_Output["canopy_lai"].iloc[-1], DO3SE_Output["canopy_lai_brown"].iloc[-1], M12O3)
     stemN_min=stemNconc_O3(M12O3)
+
+    #get the critical ozone flux for antioxidant function
+    cL3=DO3SE_config["Land_Cover"]["parameters"][0]["pn_gsto"]["cL3"]
 
     #get the ratio of mass in grain versus ear
     grain_to_ear=DO3SE_config["carbon_allocation"]["grain_to_ear"]
@@ -80,24 +85,29 @@ for file_id in file_ids:
                 Nup_preanth=0
                 
                 #distribute N from leaf and stem and uptake
-                into_Nharv, intoLeaf, intoStem, leavingLeaf, leavingStem, p_harv \
+                into_Nharv, intoLeaf, intoStem, leavingLeaf, leavingStem, p_harv, increaseLeafAntioxidant, increaseStemAntioxidant \
                     = distribute_N_post_anth(dvi,leafN, stemN, decreaseLAI, weightStem,  \
-                                             Nup_postanth,leafN_min,stemN_min)
+                                             Nup_postanth,leafN_min,stemN_min, \
+                                             cL3, fstAcc)
                
                 #update N pools
                 stemN=stemN+intoStem-leavingStem
                 leafN=leafN+intoLeaf-leavingLeaf
+                leafAntioxidants=leafAntioxidants+increaseLeafAntioxidant
+                stemAntioxidants=stemAntioxidants+increaseStemAntioxidant
                 
                 #get reduction in LAI
                 growthLAI, decreaseLAI=change_LAI(LAI,LAI_yesterday)
                 
         elif dvi<=0 or dvi>2: #if thermal time greater than end of seed growth or before emergence...
             Nup_preanth,Nup_postanth,leavingLeaf,leavingStem,intoLeaf,intoStem,into_Nharv,decreaseLAI, \
-                growthLAI,p_harv=set_not_growing_params()
+                growthLAI,p_harv, increaseLeafAntioxidant, increaseStemAntioxidant=set_not_growing_params()
             
             #update N pools
             stemN=stemN+intoStem-leavingStem
             leafN=leafN+intoLeaf-leavingLeaf
+            leafAntioxidants=leafAntioxidants+increaseLeafAntioxidant
+            stemAntioxidants=stemAntioxidants+increaseStemAntioxidant
         
         #update the grain N, and cumulative N uptake
         Nharv=Nharv+into_Nharv
@@ -105,8 +115,8 @@ for file_id in file_ids:
         if dvi<=1: CumNup_pre_anth=CumNup
         #save some of the parameters
         for counter in range(counter, counter+24):
-            DO3SE_Output.loc[counter,'stemN']=stemN
-            DO3SE_Output.loc[counter,'leafN']=leafN
+            DO3SE_Output.loc[counter,'stemN']=stemN+stemAntioxidants #I seperate usable N from antioxidant N for ease of modelling
+            DO3SE_Output.loc[counter,'leafN']=leafN+leafAntioxidants  #so I need to add it back to get correct measure of N
             DO3SE_Output.loc[counter,'decreaseLAI']=decreaseLAI
             DO3SE_Output.loc[counter,'Nharv']=Nharv
             DO3SE_Output.loc[counter,'N_grain']=Nharv*ear_grain_N
@@ -119,6 +129,10 @@ for file_id in file_ids:
             DO3SE_Output.loc[counter,'growthLAI']=growthLAI
             DO3SE_Output.loc[counter,'NintoStem']=intoStem
             DO3SE_Output.loc[counter,'NintoLeaf']=intoLeaf
+            DO3SE_Output.loc[counter,'LeafAntioxidantN']=leafAntioxidants
+            DO3SE_Output.loc[counter,'StemAntioxidantN']=stemAntioxidants
+            DO3SE_Output.loc[counter,'LeafNonAntioxidantN']=leafN
+            DO3SE_Output.loc[counter,'StemNonAntioxidantN']=stemN
 
             with warnings.catch_warnings(): 
                 warnings.filterwarnings('error')
@@ -127,7 +141,7 @@ for file_id in file_ids:
                 except: DO3SE_Output.loc[counter,'grain_N_conc'] = 0
                 try: DO3SE_Output.loc[counter,'chaff_N_conc']=100*Nharv*(1-ear_grain_N)/(DO3SE_Output.loc[counter,'c_harv']*kg_to_g*(1-grain_to_ear)/frac_carbon) #gNm-2/gDMm-2 converted to a %
                 except: DO3SE_Output.loc[counter,'chaff_N_conc'] = 0
-                try: DO3SE_Output.loc[counter,'stem_N_conc']=100*stemN/((DO3SE_Output.loc[counter,'c_stem']+DO3SE_Output.loc[counter,'c_resv'])*kg_to_g/frac_carbon) #gNm-2/gDMm-2 converted to a %
+                try: DO3SE_Output.loc[counter,'stem_N_conc']=100*(stemN+stemAntioxidants)/((DO3SE_Output.loc[counter,'c_stem']+DO3SE_Output.loc[counter,'c_resv'])*kg_to_g/frac_carbon) #gNm-2/gDMm-2 converted to a %
                 except: DO3SE_Output.loc[counter,'stem_N_conc']=0 
                 DO3SE_Output.loc[counter,'leaf_N_conc']=100*get_leafN_conc(DO3SE_Output.loc[counter,"leaf_dm"],DO3SE_Output.loc[counter,"lbrn_dm"],
                                                                             DO3SE_Output.loc[counter,"leafN"]) #gNm-2/gDMm-2 converted to a %

@@ -1,7 +1,7 @@
 #Parameters required by the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 01/03/2023
+#last edited 26/03/2023
 
 #---------------------------------------------------------------------------------------------
 import json
@@ -18,7 +18,7 @@ file_ids=configN["runInfo"]["file_ids"]
 #---------------------------------------------------------------------------------------------
 #Constant variables
 
-#carbon to dry matter conversions
+#DO3SE-Crop parameters
 kg_to_g=1000 #conversion factor
 frac_carbon=0.5 #carbon fraction of dry biomass is 0.5
 
@@ -31,6 +31,12 @@ leaf_O3gradient=configN["O3Remob"]["leaf_O3gradient"]
 leaf_O3intercept=configN["O3Remob"]["leaf_O3intercept"]
 stem_O3gradient=configN["O3Remob"]["stem_O3gradient"]
 stem_O3intercept=configN["O3Remob"]["stem_O3intercept"]
+
+#antioxidant values
+Antioxidants=configN["AntioxidantResponse"]["Antioxidants"]
+gradient_modifier_leaf=configN["AntioxidantResponse"]["gradientModifierLeaf"]
+gradient_modifier_stem=configN["AntioxidantResponse"]["gradientModifierStem"]
+endPoint=configN["AntioxidantResponse"]["endPoint"]
 
 #parameters describing uptake
 Nup_premax=configN["uptakeN"]["Nup_premax"] #preanthesis maximum uptake of nitrogen due to leaf area expansion g N m-2 day-1
@@ -51,13 +57,14 @@ Nup_preanth=0 #no N uptake
 Nup_postanth=0
 CumNup_pre_anth=0
 Nharv=0 #current accumulated N in the harvest pool is 0 g m-2
-weightStem=0
+weightStem= 0
 stemN=weightStem*stemN_targ #N content of the stem in g m-2
 leafN=0
 CumNup=stemN+leafN
 weightStem_yesterday=0
 LAI_yesterday=0
 p_harv=0 #no partitioning of N to grain until grain starts to fill
-hdd_sum=0
+leafAntioxidants=0
+stemAntioxidants=0
 
 
