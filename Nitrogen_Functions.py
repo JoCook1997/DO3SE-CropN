@@ -165,7 +165,7 @@ def distribute_N_uptake_pre_anth(stem_weight,N_uptk,N_stem,leaf_area_growth,leaf
 
 #-------------------------------------------------------------------------------------------
 
-def distribute_N_post_anth(development_index, N_leaf, N_stem, decrease_LAI, \
+def distribute_N_post_anth(development_index, N_leaf, N_stem,current_LAI, decrease_LAI, \
                            stem_weight,post_anth_uptk,leafN_senes,stemN_senes, \
                             threshold_O3flux, current_O3flux):
     #fraction N to grain
@@ -180,11 +180,19 @@ def distribute_N_post_anth(development_index, N_leaf, N_stem, decrease_LAI, \
     
     #here I subtract all released N, regardless of whether it is later used for antioxidants and stays in leaf
     #Nleaf therefore becomes a measure of usable leaf N, same with stemN
+    #do some error checking
+    if released_leafN>N_leaf:
+        released_leafN=leafN-(current_LAI*leafN_senes)
+        if released_leafN<0:
+            released_leafN=0
     N_leaf=N_leaf-released_leafN
 
     #calculate available nitrogen for the grain
     available_stemN=N_stem-(stem_weight*stemN_senes)
-
+    
+    if available_stemN<0:
+        available_stemN=0
+    
     if Antioxidants=="True":
         #redefine released_leafN since antioxidants mean some of that will stay in leaf
         #not move to stem. But don't add it back to leaf pool. Keep leaf and stem
