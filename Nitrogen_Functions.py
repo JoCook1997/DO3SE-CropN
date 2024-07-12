@@ -304,6 +304,8 @@ def avgM12O3(df):
                                             #select >20ppb so we hopefully capture
                                             #avg O3 after it has been turned on
     M12=subset2.loc[:,'o3_ppb'].mean()
+    if np.isnan(M12)==True:
+        M12=0
     return M12
 #-------------------------------------------------------------------------------------------
 #can make this handle a list of input files eventually if necessary
