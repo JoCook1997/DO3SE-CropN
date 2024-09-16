@@ -6,7 +6,7 @@ Version 2.0 contains antioxidant processes designed using data from Yadav _et al
 # Publications  
 Version 1.0 (Cook _et al_, 2024)  
 
-Version 2.0 manuscript is in preparation  
+Version 2.0 (Cook _et al_, submitted)
 
 Cook, J., Brewster, C., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., Pleijel, H., and Emberson, L.: New ozone-nitrogen model shows early senescence onset is the primary cause of ozone-induced reduction in grain quality of wheat, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2024-1311, 2024
 
