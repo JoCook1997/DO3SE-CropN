@@ -1,7 +1,7 @@
 #Parameters required by the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 26/03/2024
+#last edited 31/03/2025
 
 #---------------------------------------------------------------------------------------------
 import json
@@ -12,7 +12,6 @@ with open(r'configN.json') as file:
 
 #file path and ID variables
 file_path=configN["runInfo"]["file_path"]
-calib_eval=configN["runInfo"]["calib_eval"]
 file_ids=configN["runInfo"]["file_ids"]
 
 #---------------------------------------------------------------------------------------------

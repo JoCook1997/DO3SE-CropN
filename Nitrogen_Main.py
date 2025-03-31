@@ -21,7 +21,7 @@ for file_id in file_ids:
     DO3SE_Output=read_DO3SE_output(file_path, file_id)
 
     #get partition fractions used in model run
-    with open (file_path+file_id+"/processed_config.json","r") as config:
+    with open (file_path+"/processed_config.json","r") as config:
         DO3SE_config=json.load(config)
 
     #counters
@@ -151,7 +151,7 @@ for file_id in file_ids:
         #go to next day
         row_counter+=24
 
-    DO3SE_Output.to_csv(file_path+'/N_Outputs/'+file_id+'/'+file_id+'_N.csv', index=False)
+    DO3SE_Output.to_csv(file_path+'/'+file_id+'_N.csv', index=False)
     anthind=DO3SE_Output[DO3SE_Output["dvi"] >= 1].index[0]
     stemanthconc=DO3SE_Output.at[DO3SE_Output.index[anthind],'stem_N_conc']
     leafanthconc=DO3SE_Output.at[DO3SE_Output.index[anthind],'leaf_N_conc']

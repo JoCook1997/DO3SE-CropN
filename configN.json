@@ -1,15 +1,15 @@
 {
     "runInfo": {
-        "file_path": "//storage/environment/Staff/jlc631/Academic/PostDoc/DO3SEGroup/ProvidingNModuleInfo/DO3SEOutput/output_cubic/",
-        "file_ids": ["BA_2015_Sk_L_ExampleCubic.csv"]
+        "file_path": "//storage/environment/Staff/jlc631/Academic/PostDoc/DO3SEGroup/ProvidingNModuleInfo/DO3SEOutput/output_cubic",
+        "file_ids": ["BA_2015_Sk_L_ExampleCubic"]
     },
     "concN": {
-        "leafN_targ": 1, 
-        "stemN_targ": 0.017
+        "leafN_targ": 1.65, 
+        "stemN_targ": 0.018
     },
     "uptakeN": {
-        "Nup_premax": 0.55,
-        "Nup_postmax": 0.3
+        "Nup_premax": 0.65,
+        "Nup_postmax": 0.4
     },
     "transfertograinN": {
         "alpha": 23,
@@ -17,9 +17,9 @@
         "ear_grain_N": 0.95
     },
     "O3Remob":{
-        "leaf_O3gradient": 0.2,
+        "leaf_O3gradient": 0.798,
         "leaf_O3intercept": 10.89,
-        "stem_O3gradient": 0.0325,
+        "stem_O3gradient": 0.0138,
         "stem_O3intercept": 0.2293
     },
     "AntioxidantResponse":{

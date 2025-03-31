@@ -1,7 +1,7 @@
 #Functions used by the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 26/03/2024
+#last edited 31/03/2025
 #--------------------------------------------------------------------------------------------
 import pandas as pd
 import math
@@ -310,6 +310,6 @@ def avgM12O3(df):
 #-------------------------------------------------------------------------------------------
 #can make this handle a list of input files eventually if necessary
 def read_DO3SE_output(path, i_d):
-    read_output_data=pd.DataFrame(pd.read_csv(str(path+'/'+i_d+'/'+i_d+'_out.csv')))
+    read_output_data=pd.DataFrame(pd.read_csv(str(path+'/'+i_d+'.csv')))
     return read_output_data
 #-------------------------------------------------------------------------------------------
