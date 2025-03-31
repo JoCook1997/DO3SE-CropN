@@ -8,6 +8,8 @@ Version 1.0 (Cook _et al_, 2024)
 
 Version 2.0 (Cook _et al_, 2025)
 
+Brewster, C., Fenner, N., & Hayes, F. (2024). Chronic ozone exposure affects nitrogen remobilization in wheat at key growth stages. Science of the Total Environment, 908, 168288.
+
 Cook, J., Brewster, C., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., Pleijel, H., and Emberson, L.: New ozone–nitrogen model shows early senescence onset is the primary cause of ozone-induced reduction in grain quality of wheat, Biogeosciences, 21, 4809–4835, https://doi.org/10.5194/bg-21-4809-2024, 2024.
 
 Cook, J., Yadav, D. S., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., and Emberson, L.: Modelling ozone-induced changes in wheat amino acids and protein quality using a process-based crop model, Biogeosciences, 22, 1035–1056, https://doi.org/10.5194/bg-22-1035-2025, 2025.
