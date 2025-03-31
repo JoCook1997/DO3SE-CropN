@@ -1,14 +1,22 @@
 # DO3SE-CropN
-The N module add-on for the DO3SE-Crop model (Pande _et al_, 2024)
+The N module add-on for the DO3SE-Crop model (Pande _et al_, 2025)
 Version 1.0 contains the effect of ozone on N remobilisation from the leaf and stem to the grain, parameterised using data from Brewster, Fenner and Hayes (2024).  
 Version 2.0 contains antioxidant processes designed using data from Yadav _et al._ (2019), Yadav _et al._ (2020) and Yadav _et al._ (2021).  
 
 # Publications  
 Version 1.0 (Cook _et al_, 2024)  
 
-Version 2.0 (Cook _et al_, submitted)
+Version 2.0 (Cook _et al_, 2025)
 
-Cook, J., Brewster, C., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., Pleijel, H., and Emberson, L.: New ozone-nitrogen model shows early senescence onset is the primary cause of ozone-induced reduction in grain quality of wheat, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2024-1311, 2024
+Cook, J., Brewster, C., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., Pleijel, H., and Emberson, L.: New ozone–nitrogen model shows early senescence onset is the primary cause of ozone-induced reduction in grain quality of wheat, Biogeosciences, 21, 4809–4835, https://doi.org/10.5194/bg-21-4809-2024, 2024.
 
-Pande, P., Bland, S., Booth, N., Cook, J., Feng, Z., and Emberson, L.: Developing the DO3SE-crop model for Xiaoji, China, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2024-694, 2024.
+Cook, J., Yadav, D. S., Hayes, F., Booth, N., Bland, S., Pande, P., Thankappan, S., and Emberson, L.: Modelling ozone-induced changes in wheat amino acids and protein quality using a process-based crop model, Biogeosciences, 22, 1035–1056, https://doi.org/10.5194/bg-22-1035-2025, 2025.
+
+Pande, P., Bland, S., Booth, N., Cook, J., Feng, Z., and Emberson, L.: Development of the DO3SE-Crop model to assess ozone effects on crop phenology, biomass, and yield, Biogeosciences, 22, 181–212, https://doi.org/10.5194/bg-22-181-2025, 2025.
+
+Yadav, D. S., Rai, R., Mishra, A. K., Chaudhary, N., Mukherjee, A., Agrawal, S. B., & Agrawal, M. (2019). ROS production and its detoxification in early and late sown cultivars of wheat under future O3 concentration. Science of the Total Environment, 659, 200-210.
+
+Yadav, D. S., Mishra, A. K., Rai, R., Chaudhary, N., Mukherjee, A., Agrawal, S. B., & Agrawal, M. (2020). Responses of an old and a modern Indian wheat cultivar to future O3 level: Physiological, yield and grain quality parameters. Environmental Pollution, 259, 113939.
+
+Yadav, D. S., Agrawal, S. B., & Agrawal, M. (2021). Ozone flux-effect relationship for early and late sown Indian wheat cultivars: Growth, biomass, and yield. Field Crops Research, 263, 108076.
 
