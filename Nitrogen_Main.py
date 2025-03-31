@@ -1,7 +1,7 @@
 #Main code for the DO3SE model Nitrogen module
 #Jo Cook
 #date created 08/07/2022
-#last edited 26/03/2024
+#last edited 31/03/2025
 
 #import the functions and parameters for the nitrogen module
 import pandas as pd
@@ -18,10 +18,10 @@ for file_id in file_ids:
     from Nitrogen_Parameters import * #this is so it re-initialises for every file_id
 
     #read in the DO3SE output file
-    DO3SE_Output=read_DO3SE_output(file_path+"DO3SE_Outputs"+calib_eval, file_id)
+    DO3SE_Output=read_DO3SE_output(file_path, file_id)
 
     #get partition fractions used in model run
-    with open (file_path+"DO3SE_Outputs"+calib_eval+file_id+"/processed_config.json","r") as config:
+    with open (file_path+file_id+"/processed_config.json","r") as config:
         DO3SE_config=json.load(config)
 
     #counters
@@ -68,7 +68,7 @@ for file_id in file_ids:
                                                                                                       growthLAI,decreaseLAI,stemN_min,leafN_min)
                 
                 #update N pools
-                stemN=stemN+intoStem-leavingStem
+                stemN=stemN+intoStem-leavingStem #output state variable because it changes
                 leafN=leafN+intoLeaf-leavingLeaf
                 
             elif dvi >=1: #grain is filling
@@ -84,7 +84,7 @@ for file_id in file_ids:
                 
                 #distribute N from leaf and stem and uptake
                 into_Nharv, intoLeaf, intoStem, leavingLeaf, leavingStem, p_harv, increaseLeafAntioxidant, increaseStemAntioxidant \
-                    = distribute_N_post_anth(dvi,leafN, stemN, decreaseLAI, weightStem,  \
+                    = distribute_N_post_anth(dvi,leafN, stemN, LAI, decreaseLAI, weightStem,  \
                                              Nup_postanth,leafN_min,stemN_min, \
                                              cL3, fstAcc)
                
@@ -145,13 +145,13 @@ for file_id in file_ids:
                                                                             DO3SE_Output.loc[counter,"leafN"]) #gNm-2/gDMm-2 converted to a %
             counter+=1
         
-        LAI_yesterday=LAI
+        LAI_yesterday=LAI #would need this and below to be one of my inputs when changing it to the DO3SE style
         weightStem_yesterday=weightStem
         
         #go to next day
         row_counter+=24
 
-    DO3SE_Output.to_csv(file_path+'/N_Outputs'+calib_eval+'/'+file_id+'/'+file_id+'_N.csv', index=False)
+    DO3SE_Output.to_csv(file_path+'/N_Outputs/'+file_id+'/'+file_id+'_N.csv', index=False)
     anthind=DO3SE_Output[DO3SE_Output["dvi"] >= 1].index[0]
     stemanthconc=DO3SE_Output.at[DO3SE_Output.index[anthind],'stem_N_conc']
     leafanthconc=DO3SE_Output.at[DO3SE_Output.index[anthind],'leaf_N_conc']

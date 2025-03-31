@@ -1,8 +1,7 @@
 {
     "runInfo": {
-        "file_path": "Y:/Academic/PhD/DO3SEStuff/N_Module/Improved_Basic_Module/",
-        "calib_eval": "/Paper2Eval/",
-        "file_ids": ["VA_2018_HU_A","VA_2018_HU_E"]
+        "file_path": "//storage/environment/Staff/jlc631/Academic/PostDoc/DO3SEGroup/ProvidingNModuleInfo/DO3SEOutput/output_cubic/",
+        "file_ids": ["BA_2015_Sk_L_ExampleCubic.csv"]
     },
     "concN": {
         "leafN_targ": 1, 
@@ -20,13 +19,13 @@
     "O3Remob":{
         "leaf_O3gradient": 0.2,
         "leaf_O3intercept": 10.89,
-        "stem_O3gradient": 0.0285,
+        "stem_O3gradient": 0.0325,
         "stem_O3intercept": 0.2293
     },
     "AntioxidantResponse":{
-        "Antioxidants": "True",
-        "gradientModifierLeaf": 0.6,
-        "gradientModifierStem": 10,
+        "Antioxidants": "False",
+        "gradientModifierLeaf": 1,
+        "gradientModifierStem": 2,
         "endPoint":45000
     }
 }
